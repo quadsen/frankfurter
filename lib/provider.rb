@@ -70,7 +70,7 @@ class Provider < Sequel::Model(:providers)
     end
   end
 
-  def backfill(after: last_synced || coverage_start)
+  def backfill(after: last_synced || [coverage_start, Date.today << 12].max)
     if after && after >= Date.today
       Log.info("#{key}: up to date")
       return
